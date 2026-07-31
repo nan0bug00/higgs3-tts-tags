@@ -80,12 +80,14 @@ RUN cmake -B build \
     && cmake --build build -j "$(nproc)" --target audiocpp_cli --target audiocpp_server
 
 COPY check-no-avx.sh /usr/local/bin/check-no-avx.sh
-RUN chmod +x /usr/local/bin/check-no-avx.sh \
+# sed strips Windows CRLF if the build context was sent from a Windows checkout.
+RUN sed -i 's/\r$//' /usr/local/bin/check-no-avx.sh \
+    && chmod +x /usr/local/bin/check-no-avx.sh \
     && mkdir -p /out/bin /out/lib /out/model_specs \
     && cp build/bin/audiocpp_server build/bin/audiocpp_cli /out/bin/ \
     && { find build -maxdepth 3 -name '*.so*' -exec cp -a {} /out/lib/ \; || true; } \
     && cp -a model_specs/. /out/model_specs/ \
-    && /usr/local/bin/check-no-avx.sh /out/bin/audiocpp_server /out/bin/audiocpp_cli /out/lib
+    && bash /usr/local/bin/check-no-avx.sh /out/bin/audiocpp_server /out/bin/audiocpp_cli /out/lib
 
 # ===========================================================================
 # Stage 2-base: the downloader. hf/Xet: measured ~85 MB/s vs curl's 2-3 MB/s.
@@ -163,8 +165,10 @@ ENV LD_LIBRARY_PATH=/usr/local/lib/audiocpp:${LD_LIBRARY_PATH}
 
 COPY check-no-avx.sh /usr/local/bin/check-no-avx.sh
 # Re-verify in the final image: this is what actually ships.
-RUN chmod +x /usr/local/bin/check-no-avx.sh \
-    && /usr/local/bin/check-no-avx.sh \
+# sed strips Windows CRLF if the build context was sent from a Windows checkout.
+RUN sed -i 's/\r$//' /usr/local/bin/check-no-avx.sh \
+    && chmod +x /usr/local/bin/check-no-avx.sh \
+    && bash /usr/local/bin/check-no-avx.sh \
         /usr/local/bin/audiocpp_server /usr/local/bin/audiocpp_cli /usr/local/lib/audiocpp
 
 # --- models (large, stable) ------------------------------------------------
@@ -193,7 +197,8 @@ WORKDIR /opt/higgs
 RUN mkdir -p /opt/refcache
 COPY higgs3_zonos_wrapper.py /opt/higgs/higgs3_zonos_wrapper.py
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN sed -i 's/\r$//' /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # 8081 is deliberately absent: audiocpp_server binds 127.0.0.1 and nothing
 # outside the container should reach the engine directly.

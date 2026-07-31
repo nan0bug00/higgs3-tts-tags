@@ -5,3 +5,5 @@ INSTRUCTIONS*.md
 __pycache__/
 samples/
 tools/
+build-*.log
+smoke_out/

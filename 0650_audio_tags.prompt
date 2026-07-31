@@ -11,11 +11,12 @@ The TTS container rewrites these into Higgs control tokens before speaking.
 **Style tags** — place at the START of a spoken sentence (without quotes):
 "[STYLE-WHISPERING]", "[STYLE-SHOUTING]", "[STYLE-SINGING]"
 
-**Delivery tags** — place at the START of a spoken sentence (without quotes):
-"[PROSODY-EXPRESSIVE_HIGH]", "[PROSODY-EXPRESSIVE_LOW]"
+{# YOU MAY OR MAY NOT WANT THESE, PERSONAL PREFERENCE/MODEL DEPENDENT, COMMENTED OUT FOR BEST UNIVERSAL RESULTS #}
+{# **Delivery tags** — place at the START of a spoken sentence (without quotes): #}
+{# "[PROSODY-EXPRESSIVE_HIGH]", "[PROSODY-EXPRESSIVE_LOW]" #}
 
-**Pause tags** — place exactly where the pause belongs (without quotes):
-"[PROSODY-PAUSE]", "[PROSODY-LONG_PAUSE]"
+{# **Pause tags** — place exactly where the pause belongs (without quotes): #}
+{# "[PROSODY-PAUSE]", "[PROSODY-LONG_PAUSE]" #}
 
 **Sound tags** — place exactly where the sound happens (without quotes):
 "[SFX-LAUGHTER]", "[SFX-SIGH]", "[SFX-COUGH]", "[SFX-CRYING]", "[SFX-SCREAMING]", "[SFX-SNIFF]", "[SFX-SNEEZE]", "[SFX-HUMMING]"

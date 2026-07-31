@@ -1,0 +1,7 @@
+*.sh text eol=lf
+docker-entrypoint.sh text eol=lf
+check-no-avx.sh text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+Dockerfile text eol=lf
+*.prompt text eol=lf

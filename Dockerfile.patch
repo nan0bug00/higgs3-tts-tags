@@ -1,0 +1,12 @@
+# Rebuild of the shipped image with only the wrapper replaced.
+#
+# The full Dockerfile compiles whisper.cpp and audio.cpp from CUDA devel
+# images and re-downloads 6.4 GB of weights -- tens of GB of disk for what is
+# a pure-Python change. The wrapper is the last COPY in that Dockerfile, so
+# layering it onto the published image produces the same result for one small
+# layer. Rebuild from the real Dockerfile whenever anything below the wrapper
+# (engine, weights, deps) changes.
+# Pinned by digest, not :q8 -- this build retags :q8 locally, so a tag
+# reference would make the next rebuild stack on its own output.
+FROM elbios/higgs3-whisper@sha256:ac1a56df6be43cf52d5891def8b8b930d94f65126dab2228ec1f9b1980165219
+COPY higgs3_zonos_wrapper.py /opt/higgs/higgs3_zonos_wrapper.py

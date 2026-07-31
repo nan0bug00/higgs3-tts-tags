@@ -1,0 +1,7 @@
+*.pyc
+*:Zone.Identifier
+.DS_Store
+INSTRUCTIONS*.md
+__pycache__/
+samples/
+tools/
